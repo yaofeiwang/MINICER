@@ -1,15 +1,15 @@
 function generateStegoQMAS(cover_Path,stego_Path,cover,stego,stego_step,cover_QF,attack_QF)
-% Éú³É×îÖÕµÄÒşĞ´Í¼Ïñ
+% ç”Ÿæˆæœ€ç»ˆçš„éšå†™å›¾åƒ
 if attack_QF==0
 cover = double(cover);
 stego = double(stego);
-% ÒşĞ´µÄĞŞ¸Ä
+% éšå†™çš„ä¿®æ”¹
 diff = stego - cover;
-% ¶ÁÈ¡ÔØÌåÍ¼Ïñ
-C_STRUCT = jpeg_read(cover_Path);
-C_COEFFS = C_STRUCT.coef_arrays{1};
-C_QUANT = C_STRUCT.quant_tables{1}; %ÔØÌåÍ¼ÏñÁ¿»¯±í
-% ÒşĞ´ºóµÄÏµÊı±ä»¯
+% è¯»å–è½½ä½“å›¾åƒ
+C_STRUCT = jpeg_read(cover_Path); %è¯»å–å›¾åƒç»“æ„
+C_COEFFS = C_STRUCT.coef_arrays{1};%è¯»å–å›¾åƒæœªé‡åŒ–ç³»æ•°
+C_QUANT = C_STRUCT.quant_tables{1}; %è½½ä½“å›¾åƒé‡åŒ–è¡¨
+% éšå†™åçš„ç³»æ•°å˜åŒ–
 fun = @(x) (x.data .* stego_step);
 coeffs_s = blockproc(stego,[8 8],fun);
 coeffs_s(diff==0) = C_COEFFS(diff==0);
@@ -20,13 +20,13 @@ jpeg_write(S_STRUCT,stego_Path);
 elseif cover_QF<=attack_QF
 cover = double(cover);
 stego = double(stego);
-% ÒşĞ´µÄĞŞ¸Ä
+% éšå†™çš„ä¿®æ”¹
 diff = stego - cover;
-% ¶ÁÈ¡ÔØÌåÍ¼Ïñ
+% è¯»å–è½½ä½“å›¾åƒ
 C_STRUCT = jpeg_read(cover_Path);
 C_COEFFS = C_STRUCT.coef_arrays{1};
-C_QUANT = C_STRUCT.quant_tables{1}; %ÔØÌåÍ¼ÏñÁ¿»¯±í
-% ÒşĞ´ºóµÄÏµÊı±ä»¯
+C_QUANT = C_STRUCT.quant_tables{1}; %è½½ä½“å›¾åƒé‡åŒ–è¡¨
+% éšå†™åçš„ç³»æ•°å˜åŒ–
 fun = @(x) (x.data .* stego_step);
 coeffs_s = blockproc(stego,[8 8],fun);
 coeffs_s(diff==0) = C_COEFFS(diff==0);
@@ -37,13 +37,13 @@ jpeg_write(S_STRUCT,stego_Path);
 elseif cover_QF>attack_QF
 cover = double(cover);
 stego = double(stego);
-% ÒşĞ´µÄĞŞ¸Ä
+% éšå†™çš„ä¿®æ”¹
 diff = stego - cover;
-% ¶ÁÈ¡ÔØÌåÍ¼Ïñ
+% è¯»å–è½½ä½“å›¾åƒ
 C_STRUCT = jpeg_read(cover_Path);
 C_COEFFS = C_STRUCT.coef_arrays{1};
-C_QUANT = C_STRUCT.quant_tables{1}; %ÔØÌåÍ¼ÏñÁ¿»¯±í
-% ÒşĞ´ºóµÄÏµÊı±ä»¯
+C_QUANT = C_STRUCT.quant_tables{1}; %è½½ä½“å›¾åƒé‡åŒ–è¡¨
+% éšå†™åçš„ç³»æ•°å˜åŒ–
 S_QUANT = quantizationTable(attack_QF);
 fun = @(x) (x.data.*S_QUANT);
 coeffs_uq = blockproc(stego,[8 8],fun);
