@@ -1,10 +1,10 @@
 function [msg,msg_len] = generateRandMsg(cover_Path,payload)
-% Éú³ÉËæ»úÏûÏ¢
+% ç”Ÿæˆéšæœºæ¶ˆæ¯
 C_STRUCT = jpeg_read(cover_Path);
 C_COEFFS = C_STRUCT.coef_arrays{1};
 nzAC = nnz(C_COEFFS) - nnz(C_COEFFS(1:8:end,1:8:end));
 raw_msg_len = ceil(payload*nzAC);
-raw_msg = round( rand(1,raw_msg_len) ); %Ô­Ê¼ÃØÃÜĞÅÏ¢µÄĞĞÏòÁ¿
+raw_msg = round( rand(1,raw_msg_len) ); %é€šè¿‡éšæœºæ•°ç”Ÿæˆéšæœº 01 æ¶ˆæ¯ä½œä¸ºåŸå§‹ç§˜å¯†ä¿¡æ¯çš„è¡Œå‘é‡
 msg = raw_msg;
 msg_len = raw_msg_len;
 
